@@ -52,7 +52,8 @@ class handler(BaseHTTPRequestHandler):
             data = {"name": g("name")[:12], "gender": g("gender"), "date": date,
                     "calendar": "lunar" if g("calendar") == "lunar" else "solar", "leap": bool(g("leap")),
                     "time": t, "job": g("job"), "status": g("status"), "interests": (q.get("interests") or [])[:2]}
-            full = g("code").replace(" ", "").lower() in STORE_CODES
+            full = True  # 2026-11-24 사장님 요청: 매장 코드 없이 누구나 전체 공개 (다시 잠글 땐 아래 줄로)
+            # full = g("code").replace(" ", "").lower() in STORE_CODES
             hidden = "".join(f'<input type="hidden" name="{k}" value="{html.escape(v, quote=True)}">'
                              for k in FIELDS for v in (q.get(k) or []))
             p = R.calc_person(data)

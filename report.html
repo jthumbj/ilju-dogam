@@ -89,12 +89,7 @@ button{width:100%;margin-top:22px;font:700 17px 'Noto Sans KR',sans-serif;color:
       </div>
     </details>
 
-    <div class="code">
-      <label class="t" for="code" style="margin-top:0">매장 코드 (있으면 입력)</label>
-      <input type="text" id="code" name="code" placeholder="혼술바 온도에서 받은 코드" autocomplete="off">
-      <p class="hint">코드가 있으면 14쪽 전체 리포트, 없으면 요약판이 나와요.</p>
-    </div>
-
+    <!-- 매장 코드 칸: 필요할 때 다시 넣기 (api/report.py의 full 줄도 같이) -->
     <button type="submit">내 2027년 리포트 보기</button>
   </form>
   <p class="note">입력한 정보는 리포트 계산에만 쓰고 어디에도 저장하지 않아요.<br>재미와 참고를 위한 콘텐츠예요 · <a href="/">내 일주 찾기</a></p>
@@ -107,7 +102,6 @@ const sync=()=>{lb.style.display=document.querySelector('input[name=calendar]:ch
 document.querySelectorAll('input[name=calendar]').forEach(r=>r.addEventListener('change',sync));sync();
 document.querySelectorAll('#ints input').forEach(c=>c.addEventListener('change',()=>{
   const on=[...document.querySelectorAll('#ints input:checked')];if(on.length>2)c.checked=false;}));
-const c=new URLSearchParams(location.search).get('code');if(c)document.getElementById('code').value=c;
 </script>
 </body>
 </html>
