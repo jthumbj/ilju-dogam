@@ -32,8 +32,8 @@ input[type=text],input[type=date],input[type=time],select{width:100%;font:16px '
 .row input[type=time]{flex:1}
 .chk{display:flex;align-items:center;gap:6px;font-size:14px;color:#a3abbf;white-space:nowrap}
 .chk input{width:18px;height:18px;accent-color:#d4b06a}
-details{margin-top:18px;border-top:1px solid rgba(255,255,255,.1);padding-top:14px}
-summary{cursor:pointer;color:#f0d9a6;font-size:14px}
+.opt{margin-top:20px;border-top:1px solid rgba(255,255,255,.1);padding-top:16px}
+.opt-t{color:#f0d9a6;font-size:15px;font-weight:500}
 .hint{font-size:12px;color:#a3abbf;margin-top:6px;line-height:1.6}
 .code{border:1px dashed rgba(212,176,106,.6);border-radius:12px;padding:14px;margin-top:20px;background:rgba(212,176,106,.05)}
 button{width:100%;margin-top:22px;font:700 17px 'Noto Sans KR',sans-serif;color:#0d1630;background:#d4b06a;border:0;border-radius:12px;padding:15px;cursor:pointer}
@@ -72,8 +72,8 @@ button{width:100%;margin-top:22px;font:700 17px 'Noto Sans KR',sans-serif;color:
     </div>
     <p class="hint">시간을 몰라도 괜찮아요. 시주를 빼고 나머지 여섯 글자로 풀이해요.</p>
 
-    <details>
-      <summary>더 정확한 맞춤 풀이 (선택)</summary>
+    <div class="opt">
+      <div class="opt-t">더 정확한 맞춤 풀이 (선택)</div>
       <label class="t" for="job">하는 일</label>
       <select id="job" name="job"><option value="">선택 안 함</option><option>직장인</option><option>자영업</option><option>학생·취준</option><option value="">기타</option></select>
       <label class="t" for="status">연애·결혼 상태</label>
@@ -87,7 +87,7 @@ button{width:100%;margin-top:22px;font:700 17px 'Noto Sans KR',sans-serif;color:
         <label><input type="checkbox" name="interests" value="건강"><span>건강</span></label>
         <label><input type="checkbox" name="interests" value="인간관계"><span>관계</span></label>
       </div>
-    </details>
+    </div>
 
     <!-- 매장 코드 칸: 필요할 때 다시 넣기 (api/report.py의 full 줄도 같이) -->
     <button type="submit">내 2027년 리포트 보기</button>
