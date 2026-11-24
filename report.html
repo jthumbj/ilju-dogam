@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2027 신년운세 리포트 받기 · 60일주 도감</title>
+<meta name="description" content="생년월일을 넣으면 내 일주로 보는 2027 정미년 신년운세 리포트가 바로 만들어져요.">
+<meta property="og:title" content="2027 정미년 내 일주 신년운세">
+<meta property="og:description" content="생년월일만 넣으면 바로 나오는 신년운세 리포트">
+<meta property="og:image" content="https://ilju60.vercel.app/og.png">
+<link rel="icon" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;color:#ece7da;background:radial-gradient(120% 70% at 50% 0%,#1b2a55 0%,#0d1630 60%,#0a1126 100%) fixed;min-height:100vh}
+.wrap{max-width:520px;margin:0 auto;padding:44px 20px 60px}
+.brand{text-align:center;color:#d4b06a;letter-spacing:.4em;font-size:12px}
+h1{font-family:'Noto Serif KR',serif;text-align:center;font-size:28px;color:#f0d9a6;margin:14px 0 6px;line-height:1.35}
+.big{font-family:'Noto Serif KR',serif;text-align:center;font-size:58px;font-weight:900;color:#f0d9a6;letter-spacing:.08em;line-height:1.1}
+.sub{text-align:center;color:#a3abbf;font-size:14px;line-height:1.7;margin-bottom:26px}
+form{background:rgba(255,255,255,.035);border:1px solid rgba(212,176,106,.35);border-radius:14px;padding:22px 18px}
+label.t{display:block;font-size:13px;color:#d4b06a;margin:16px 0 7px;letter-spacing:.05em}
+label.t:first-child{margin-top:0}
+input[type=text],input[type=date],input[type=time],select{width:100%;font:16px 'Noto Sans KR',sans-serif;color:#ece7da;background:#0b1430;border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:12px;color-scheme:dark}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg label{flex:1;min-width:70px}
+.seg input{display:none}
+.seg span{display:block;text-align:center;padding:11px 6px;border:1px solid rgba(255,255,255,.18);border-radius:10px;font-size:15px;color:#a3abbf;cursor:pointer}
+.seg input:checked+span{border-color:#d4b06a;color:#f0d9a6;background:rgba(212,176,106,.14)}
+.row{display:flex;gap:10px;align-items:center}
+.row input[type=time]{flex:1}
+.chk{display:flex;align-items:center;gap:6px;font-size:14px;color:#a3abbf;white-space:nowrap}
+.chk input{width:18px;height:18px;accent-color:#d4b06a}
+details{margin-top:18px;border-top:1px solid rgba(255,255,255,.1);padding-top:14px}
+summary{cursor:pointer;color:#f0d9a6;font-size:14px}
+.hint{font-size:12px;color:#a3abbf;margin-top:6px;line-height:1.6}
+.code{border:1px dashed rgba(212,176,106,.6);border-radius:12px;padding:14px;margin-top:20px;background:rgba(212,176,106,.05)}
+button{width:100%;margin-top:22px;font:700 17px 'Noto Sans KR',sans-serif;color:#0d1630;background:#d4b06a;border:0;border-radius:12px;padding:15px;cursor:pointer}
+.note{font-size:12px;color:#a3abbf;line-height:1.8;margin-top:18px;text-align:center}
+.note a{color:#d4b06a}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">60 ILJU DOGAM</div>
+  <div class="big" style="margin-top:22px">丁未</div>
+  <h1>2027 내 일주 신년운세</h1>
+  <p class="sub">생년월일을 넣으면 리포트가 바로 만들어져요.<br>연애 · 돈 · 일 · 대운 · 열두 달 흐름까지</p>
+  <form method="post" action="/api/report" id="f">
+    <label class="t" for="name">이름 또는 별명 (표지에 들어가요)</label>
+    <input type="text" id="name" name="name" maxlength="12" placeholder="예: 민지" required>
+
+    <label class="t">성별</label>
+    <div class="seg">
+      <label><input type="radio" name="gender" value="여" required><span>여성</span></label>
+      <label><input type="radio" name="gender" value="남"><span>남성</span></label>
+    </div>
+
+    <label class="t" for="date">생년월일</label>
+    <input type="date" id="date" name="date" min="1930-01-01" max="2026-12-31" value="1995-01-01" required>
+    <div class="seg" style="margin-top:8px">
+      <label><input type="radio" name="calendar" value="solar" checked><span>양력</span></label>
+      <label><input type="radio" name="calendar" value="lunar"><span>음력</span></label>
+    </div>
+    <label class="chk" style="margin-top:8px" id="leapbox"><input type="checkbox" name="leap" value="1"> 음력 윤달이에요</label>
+
+    <label class="t" for="time">태어난 시간</label>
+    <div class="row">
+      <input type="time" id="time" name="time" value="12:00">
+      <label class="chk"><input type="checkbox" name="time_unknown" value="1" id="tu"> 몰라요</label>
+    </div>
+    <p class="hint">시간을 몰라도 괜찮아요. 시주를 빼고 나머지 여섯 글자로 풀이해요.</p>
+
+    <details>
+      <summary>더 정확한 맞춤 풀이 (선택)</summary>
+      <label class="t" for="job">하는 일</label>
+      <select id="job" name="job"><option value="">선택 안 함</option><option>직장인</option><option>자영업</option><option>학생·취준</option><option value="">기타</option></select>
+      <label class="t" for="status">연애·결혼 상태</label>
+      <select id="status" name="status"><option value="">선택 안 함</option><option>미혼</option><option>연애중</option><option>기혼</option></select>
+      <label class="t">가장 궁금한 분야 (2개까지)</label>
+      <div class="seg" id="ints">
+        <label><input type="checkbox" name="interests" value="금전"><span>금전</span></label>
+        <label><input type="checkbox" name="interests" value="연애"><span>연애</span></label>
+        <label><input type="checkbox" name="interests" value="결혼"><span>결혼</span></label>
+        <label><input type="checkbox" name="interests" value="직장"><span>일</span></label>
+        <label><input type="checkbox" name="interests" value="건강"><span>건강</span></label>
+        <label><input type="checkbox" name="interests" value="인간관계"><span>관계</span></label>
+      </div>
+    </details>
+
+    <div class="code">
+      <label class="t" for="code" style="margin-top:0">매장 코드 (있으면 입력)</label>
+      <input type="text" id="code" name="code" placeholder="혼술바 온도에서 받은 코드" autocomplete="off">
+      <p class="hint">코드가 있으면 14쪽 전체 리포트, 없으면 요약판이 나와요.</p>
+    </div>
+
+    <button type="submit">내 2027년 리포트 보기</button>
+  </form>
+  <p class="note">입력한 정보는 리포트 계산에만 쓰고 어디에도 저장하지 않아요.<br>재미와 참고를 위한 콘텐츠예요 · <a href="/">내 일주 찾기</a></p>
+</div>
+<script>
+const tu=document.getElementById('tu'),tm=document.getElementById('time');
+tu.addEventListener('change',()=>{tm.disabled=tu.checked});
+const lb=document.getElementById('leapbox');
+const sync=()=>{lb.style.display=document.querySelector('input[name=calendar]:checked').value==='lunar'?'flex':'none'};
+document.querySelectorAll('input[name=calendar]').forEach(r=>r.addEventListener('change',sync));sync();
+document.querySelectorAll('#ints input').forEach(c=>c.addEventListener('change',()=>{
+  const on=[...document.querySelectorAll('#ints input:checked')];if(on.length>2)c.checked=false;}));
+const c=new URLSearchParams(location.search).get('code');if(c)document.getElementById('code').value=c;
+</script>
+</body>
+</html>
