@@ -48,6 +48,7 @@ button{width:100%;margin-top:22px;font:700 17px 'Noto Sans KR',sans-serif;color:
   <h1>2027 내 일주 신년운세</h1>
   <p class="sub">생년월일을 넣으면 리포트가 바로 만들어져요.<br>연애 · 돈 · 일 · 대운 · 열두 달 흐름까지</p>
   <form method="post" action="/api/report" id="f">
+    <input type="hidden" name="from" id="from">
     <label class="t" for="name">이름 또는 별명 (표지에 들어가요)</label>
     <input type="text" id="name" name="name" maxlength="12" placeholder="예: 민지" required>
 
@@ -92,9 +93,13 @@ button{width:100%;margin-top:22px;font:700 17px 'Noto Sans KR',sans-serif;color:
     <!-- 매장 코드 칸: 필요할 때 다시 넣기 (api/report.py의 full 줄도 같이) -->
     <button type="submit">내 2027년 리포트 보기</button>
   </form>
-  <p class="note">입력한 정보는 리포트 계산에만 쓰고 어디에도 저장하지 않아요.<br>재미와 참고를 위한 콘텐츠예요 · <a href="/">내 일주 찾기</a></p>
+  <p class="note">생년월일은 리포트 계산에만 쓰고 저장하지 않아요.<br>방문 확인을 위해 입력한 이름과 접속 시간만 기록돼요.<br>재미와 참고를 위한 콘텐츠예요 · <a href="/">내 일주 찾기</a></p>
 </div>
 <script>
+const from=(new URLSearchParams(location.search).get('from')||'').slice(0,20);document.getElementById('from').value=from;
+const tk=(o)=>{try{const s=JSON.stringify(o);if(navigator.sendBeacon)navigator.sendBeacon('/api/track',new Blob([s],{type:'text/plain'}));else fetch('/api/track',{method:'POST',body:s,keepalive:true});}catch(e){}};
+tk({ev:'open',from});
+document.getElementById('f').addEventListener('submit',()=>tk({ev:'report',from,name:document.getElementById('name').value}));
 const tu=document.getElementById('tu'),tm=document.getElementById('time');
 tu.addEventListener('change',()=>{tm.disabled=tu.checked});
 const lb=document.getElementById('leapbox');
