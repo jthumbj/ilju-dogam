@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>내 일주 찾기 · 일주 계산기 | 60일주 도감</title>
+<meta name="description" content="생년월일만 넣으면 60가지 일주 중 내 일주를 바로 알려드려요. 양력·음력·윤달 지원, 일주별 성격과 2027년 정미년 한 줄 풀이까지. 재미로 보는 사주.">
+<link rel="canonical" href="https://ilju-dogam.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="60일주 도감">
+<meta property="og:title" content="내 일주 찾기 · 일주 계산기 | 60일주 도감">
+<meta property="og:description" content="생년월일만 넣으면 60가지 일주 중 내 일주를 바로 알려드려요. 양력·음력·윤달 지원, 일주별 성격과 2027년 정미년 한 줄 풀이까지. 재미로 보는 사주.">
+<meta property="og:url" content="https://ilju-dogam.vercel.app/">
+<meta property="og:image" content="https://ilju-dogam.vercel.app/og.png">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b1226">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "내 일주 찾기 · 60일주 도감", "url": "https://ilju-dogam.vercel.app/", "applicationCategory": "LifestyleApplication", "operatingSystem": "All", "inLanguage": "ko", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "description": "생년월일만 넣으면 60가지 일주 중 내 일주를 바로 알려드려요. 양력·음력·윤달 지원, 일주별 성격과 2027년 정미년 한 줄 풀이까지. 재미로 보는 사주."}</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">六十日柱 圖鑑</div>
+  <h1>내 일주 찾기</h1>
+  <p class="sub">생년월일만 넣으면 60가지 일주 중<br>나는 어떤 유형인지 알려드려요</p>
+
+  <form class="card" id="f">
+    <div class="seg" role="tablist">
+      <button type="button" class="on" data-cal="solar">양력</button>
+      <button type="button" data-cal="lunar">음력</button>
+    </div>
+    <div class="row">
+      <div><label class="f" for="y">년</label><select id="y"></select></div>
+      <div><label class="f" for="m">월</label><select id="m"></select></div>
+      <div><label class="f" for="d">일</label><select id="d"></select></div>
+    </div>
+    <label class="chk" id="leapWrap" style="display:none"><input type="checkbox" id="leap"><span>윤달이에요</span></label>
+    <label class="chk"><input type="checkbox" id="late"><span>밤 11시 30분 ~ 자정 사이에 태어났어요<small>모르면 체크하지 않아도 괜찮아요</small></span></label>
+    <button class="go" type="submit">내 일주 보기</button>
+    <div class="err" id="err"></div>
+  </form>
+
+  <div class="card" id="result" aria-live="polite">
+    <div class="wm" id="wm"></div>
+    <div class="lbl">나의 일주</div>
+    <div class="name" id="rName"></div>
+    <div class="hj" id="rHj"></div>
+    <div class="img" id="rImg"></div>
+    <div class="kw" id="rKw"></div>
+    <p class="desc" id="rDesc"></p>
+    <div class="meta" id="rMeta"></div>
+    <div class="note" id="rNote" style="display:none"></div>
+    <div class="ny" id="rNy">
+      <div class="t">2027 丁未年 미리보기</div>
+      <div class="h" id="rNyH"></div>
+      <p id="rNyP"></p>
+      <small>태어난 날 첫 글자와 2027년(정미년) 첫 글자 丁의 관계로 본 한 줄이에요. 2027년 운은 입춘(2월 4일)부터 봐요 · 재미로 보는 사주</small>
+    </div>
+    <div class="acts">
+      <a class="btn" id="more" href="/ilju/">내 일주 자세히 보기 →</a>
+      <button class="btn fill" id="copy" type="button">결과 복사해서 친구한테 보내기</button>
+      <a class="btn" href="https://www.instagram.com/ilju_dogam/" target="_blank" rel="noopener">@ilju_dogam 팔로우하고 일주 도감 연재 보기 →</a>
+      <span class="btn dim">월별 흐름·연애운 상세 리포트 · 오픈 준비 중</span>
+    </div>
+  </div>
+
+  <section class="card text">
+    <h2>일주가 뭐예요?</h2>
+    <p>사주는 태어난 해·달·날·시를 네 개의 기둥(四柱)으로 봐요. 그중 <b>태어난 날의 기둥이 일주(日柱)</b>예요. 천간 10개와 지지 12개가 짝을 이뤄 모두 60가지가 있어서 '60일주'라고 불러요.</p>
+    <p>일주의 첫 글자(일간)는 사주에서 '나 자신'을 뜻한다고 봐서, MBTI처럼 성격 유형을 볼 때 많이 써요. 같은 날 태어난 사람은 모두 같은 일주예요.</p>
+    <p class="mini">태어난 시간이 밤 11시 30분~자정이면 보는 방식에 따라 다음 날 일주로 보기도 해요. 음력 생일은 양력으로 바꿔서 계산해요.</p>
+  </section>
+
+  <h2 class="sec">60일주 전체 보기</h2>
+  <nav class="grid" aria-label="60일주 전체"><a href="/ilju/gap-ja">甲子<small>갑자</small></a><a href="/ilju/eul-chuk">乙丑<small>을축</small></a><a href="/ilju/byeong-in">丙寅<small>병인</small></a><a href="/ilju/jeong-myo">丁卯<small>정묘</small></a><a href="/ilju/mu-jin">戊辰<small>무진</small></a><a href="/ilju/gi-sa">己巳<small>기사</small></a><a href="/ilju/gyeong-o">庚午<small>경오</small></a><a href="/ilju/sin-mi">辛未<small>신미</small></a><a href="/ilju/im-sin">壬申<small>임신</small></a><a href="/ilju/gye-yu">癸酉<small>계유</small></a><a href="/ilju/gap-sul">甲戌<small>갑술</small></a><a href="/ilju/eul-hae">乙亥<small>을해</small></a><a href="/ilju/byeong-ja">丙子<small>병자</small></a><a href="/ilju/jeong-chuk">丁丑<small>정축</small></a><a href="/ilju/mu-in">戊寅<small>무인</small></a><a href="/ilju/gi-myo">己卯<small>기묘</small></a><a href="/ilju/gyeong-jin">庚辰<small>경진</small></a><a href="/ilju/sin-sa">辛巳<small>신사</small></a><a href="/ilju/im-o">壬午<small>임오</small></a><a href="/ilju/gye-mi">癸未<small>계미</small></a><a href="/ilju/gap-sin">甲申<small>갑신</small></a><a href="/ilju/eul-yu">乙酉<small>을유</small></a><a href="/ilju/byeong-sul">丙戌<small>병술</small></a><a href="/ilju/jeong-hae">丁亥<small>정해</small></a><a href="/ilju/mu-ja">戊子<small>무자</small></a><a href="/ilju/gi-chuk">己丑<small>기축</small></a><a href="/ilju/gyeong-in">庚寅<small>경인</small></a><a href="/ilju/sin-myo">辛卯<small>신묘</small></a><a href="/ilju/im-jin">壬辰<small>임진</small></a><a href="/ilju/gye-sa">癸巳<small>계사</small></a><a href="/ilju/gap-o">甲午<small>갑오</small></a><a href="/ilju/eul-mi">乙未<small>을미</small></a><a href="/ilju/byeong-sin">丙申<small>병신</small></a><a href="/ilju/jeong-yu">丁酉<small>정유</small></a><a href="/ilju/mu-sul">戊戌<small>무술</small></a><a href="/ilju/gi-hae">己亥<small>기해</small></a><a href="/ilju/gyeong-ja">庚子<small>경자</small></a><a href="/ilju/sin-chuk">辛丑<small>신축</small></a><a href="/ilju/im-in">壬寅<small>임인</small></a><a href="/ilju/gye-myo">癸卯<small>계묘</small></a><a href="/ilju/gap-jin">甲辰<small>갑진</small></a><a href="/ilju/eul-sa">乙巳<small>을사</small></a><a href="/ilju/byeong-o">丙午<small>병오</small></a><a href="/ilju/jeong-mi">丁未<small>정미</small></a><a href="/ilju/mu-sin">戊申<small>무신</small></a><a href="/ilju/gi-yu">己酉<small>기유</small></a><a href="/ilju/gyeong-sul">庚戌<small>경술</small></a><a href="/ilju/sin-hae">辛亥<small>신해</small></a><a href="/ilju/im-ja">壬子<small>임자</small></a><a href="/ilju/gye-chuk">癸丑<small>계축</small></a><a href="/ilju/gap-in">甲寅<small>갑인</small></a><a href="/ilju/eul-myo">乙卯<small>을묘</small></a><a href="/ilju/byeong-jin">丙辰<small>병진</small></a><a href="/ilju/jeong-sa">丁巳<small>정사</small></a><a href="/ilju/mu-o">戊午<small>무오</small></a><a href="/ilju/gi-mi">己未<small>기미</small></a><a href="/ilju/gyeong-sin">庚申<small>경신</small></a><a href="/ilju/sin-yu">辛酉<small>신유</small></a><a href="/ilju/im-sul">壬戌<small>임술</small></a><a href="/ilju/gye-hae">癸亥<small>계해</small></a></nav>
+  <footer>
+    일주는 태어난 날의 간지(干支)로, 음력 입력은 한국천문연구원 기준 음력 데이터로 양력으로 바꿔 계산해요.<br>
+    모든 풀이는 재미와 참고를 위한 콘텐츠예요.<br>
+    <a href="/">내 일주 찾기</a> · <a href="/ilju/">60일주 전체</a> · <a href="https://www.instagram.com/ilju_dogam/" rel="noopener">인스타그램 @ilju_dogam</a><br>© 60일주 도감
+  </footer>
+</div>
+<div class="toast" id="toast">복사됐어요</div>
+<script src="/app.js"></script>
+<script>window.SLUGS=["gap-ja", "eul-chuk", "byeong-in", "jeong-myo", "mu-jin", "gi-sa", "gyeong-o", "sin-mi", "im-sin", "gye-yu", "gap-sul", "eul-hae", "byeong-ja", "jeong-chuk", "mu-in", "gi-myo", "gyeong-jin", "sin-sa", "im-o", "gye-mi", "gap-sin", "eul-yu", "byeong-sul", "jeong-hae", "mu-ja", "gi-chuk", "gyeong-in", "sin-myo", "im-jin", "gye-sa", "gap-o", "eul-mi", "byeong-sin", "jeong-yu", "mu-sul", "gi-hae", "gyeong-ja", "sin-chuk", "im-in", "gye-myo", "gap-jin", "eul-sa", "byeong-o", "jeong-mi", "mu-sin", "gi-yu", "gyeong-sul", "sin-hae", "im-ja", "gye-chuk", "gap-in", "eul-myo", "byeong-jin", "jeong-sa", "mu-o", "gi-mi", "gyeong-sin", "sin-yu", "im-sul", "gye-hae"];</script>
+<script src="/finder.js"></script>
+</body>
+</html>

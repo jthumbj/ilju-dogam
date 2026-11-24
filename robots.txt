@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ilju-dogam.vercel.app/sitemap.xml
