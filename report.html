@@ -52,6 +52,9 @@ button{width:100%;margin-top:22px;font:700 17px 'Noto Sans KR',sans-serif;color:
     <label class="t" for="name">이름 또는 별명 (표지에 들어가요)</label>
     <input type="text" id="name" name="name" maxlength="12" placeholder="예: 민지" required>
 
+    <label class="t" for="insta">인스타 아이디</label>
+    <input type="text" id="insta" name="insta" maxlength="30" placeholder="예: @minji_0101" autocomplete="off" autocapitalize="off" required>
+
     <label class="t">성별</label>
     <div class="seg">
       <label><input type="radio" name="gender" value="여" required><span>여성</span></label>
@@ -93,13 +96,13 @@ button{width:100%;margin-top:22px;font:700 17px 'Noto Sans KR',sans-serif;color:
     <!-- 매장 코드 칸: 필요할 때 다시 넣기 (api/report.py의 full 줄도 같이) -->
     <button type="submit">내 2027년 리포트 보기</button>
   </form>
-  <p class="note">생년월일은 리포트 계산에만 쓰고 저장하지 않아요.<br>방문 확인을 위해 입력한 이름과 접속 시간만 기록돼요.<br>재미와 참고를 위한 콘텐츠예요 · <a href="/">내 일주 찾기</a></p>
+  <p class="note">생년월일은 리포트 계산에만 쓰고 저장하지 않아요.<br>재미와 참고를 위한 콘텐츠예요 · <a href="/">내 일주 찾기</a></p>
 </div>
 <script>
 const from=(new URLSearchParams(location.search).get('from')||'').slice(0,20);document.getElementById('from').value=from;
 const tk=(o)=>{try{const s=JSON.stringify(o);if(navigator.sendBeacon)navigator.sendBeacon('/api/track',new Blob([s],{type:'text/plain'}));else fetch('/api/track',{method:'POST',body:s,keepalive:true});}catch(e){}};
 tk({ev:'open',from});
-document.getElementById('f').addEventListener('submit',()=>tk({ev:'report',from,name:document.getElementById('name').value}));
+document.getElementById('f').addEventListener('submit',()=>tk({ev:'report',from,name:document.getElementById('name').value,insta:document.getElementById('insta').value}));
 const tu=document.getElementById('tu'),tm=document.getElementById('time');
 tu.addEventListener('change',()=>{tm.disabled=tu.checked});
 const lb=document.getElementById('leapbox');
