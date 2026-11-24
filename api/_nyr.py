@@ -561,10 +561,11 @@ CSS = """
 @page { size: A4; margin: 0; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :root { --navy:#0d1630; --gold:#d4b06a; --gold2:#f0d9a6; --ink:#ece7da; --mute:#a3abbf; --line:rgba(212,176,106,.35); }
-body { font-family: 'Noto Sans CJK KR', sans-serif; color: var(--ink); background: var(--navy); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { word-break: keep-all; overflow-wrap: break-word; font-family: 'Noto Sans CJK KR', sans-serif; color: var(--ink); background: var(--navy); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .page { width: 210mm; height: 297mm; position: relative; overflow: hidden; page-break-after: always;
         background: radial-gradient(120% 80% at 50% 0%, #1b2a55 0%, var(--navy) 60%, #0a1126 100%); padding: 22mm 20mm 20mm; }
 .page:last-child { page-break-after: auto; }
+h1, h2, .k, .cta b, .cover .sub, .lead { text-wrap: balance; } .nw { white-space: nowrap; } p, dd, .tip { text-wrap: pretty; }
 .wm { position: absolute; right: -8mm; bottom: -14mm; font-family: 'Noto Serif CJK KR', serif; font-weight: 900; font-size: 150mm; line-height: 1; color: var(--gold); opacity: .055; }
 .hdr { position: absolute; top: 10mm; left: 20mm; right: 20mm; display: flex; justify-content: space-between; font-size: 8.5pt; color: var(--mute); letter-spacing: .08em; }
 .ftr { position: absolute; bottom: 10mm; left: 20mm; right: 20mm; display: flex; justify-content: space-between; font-size: 8pt; color: var(--mute); }
@@ -1012,6 +1013,9 @@ body { font-family: 'Noto Sans CJK KR','Noto Sans KR','Apple SD Gothic Neo',sans
 .cta p { font-size: 14px; line-height: 1.8; }
 @media (max-width: 640px) {
   .page { padding: 28px 16px 30px; margin-bottom: 3mm; }
+  .big-ilju .hz { white-space: nowrap; } .big-ilju { align-items: flex-start; }
+  .cover .sub { padding: 0 10px; line-height: 1.7; } .cover-foot { padding: 0 12px; }
+  .vs { gap: 6mm; }
   h1 { font-size: 19pt; } h2 { font-size: 12pt; }
   p, li { font-size: 10.5pt; } .lead { font-size: 9.8pt; }
   .two, .mate, .tl { grid-template-columns: 1fr; } .three { gap: 2mm; } .three .card { padding: 3.5mm 2mm !important; }
@@ -1027,6 +1031,10 @@ body { font-family: 'Noto Sans CJK KR','Noto Sans KR','Apple SD Gothic Neo',sans
   .person-head { flex-direction: column; gap: 1mm; }
   .sum { grid-template-columns: 1fr; row-gap: .6mm; } .sum dd { margin-bottom: 2.4mm; }
   .card { padding: 4.5mm 5mm; }
+}
+@media (min-width: 641px) and (max-width: 900px) {
+  .page { padding: 40px 34px; }
+  .mate { grid-template-columns: 1fr 1fr; }
 }
 @media print { .bar-top, .cta { display: none; } }
 """
@@ -1397,10 +1405,10 @@ def render(p, Y, mode="print", full=True, hidden=""):
         m = x["m"]
         cls = {1: "good", -1: "care", 0: ""}[x["lv"]]
         lv = lambda v: f'<em class="{"c" if v < 0 else ""}">{LEVEL3[v]}</em>'
-        extra = " · ".join(f"{nm} {lv(x[key])}" for key, nm in cols)
+        extra = " · ".join(f'<span class="nw">{nm} {lv(x[key])}</span>' for key, nm in cols)
         rel = f" ({'·'.join(sorted(x['kinds']))})" if x["kinds"] else ""
         return (f'<div class="{cls}"><div class="hd"><b>{month_label(m)}</b><span>{m["gz"]}</span></div>'
-                f'<div class="lv">종합 {lv(x["lv"])} · {extra}</div>'
+                f'<div class="lv"><span class="nw">종합 {lv(x["lv"])}</span> · {extra}</div>'
                 f'<p>{esc(TG[x["t1"]]["kw"])}{esc(rel)} — {esc(x["tip"])}</p></div>')
     top_m = max(ML, key=lambda x: x["score"])
     low_m = min(ML, key=lambda x: x["score"])
